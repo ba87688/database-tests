@@ -47,7 +47,7 @@ class CookieDaoTest {
     }
 
     @Test
-    fun insertCookieTest() = runTest(UnconfinedTestDispatcher()){
+    fun insertCookie() = runTest(UnconfinedTestDispatcher()){
         val cookie = Cookie(2,"testcookie")
         dao.insert(cookie)
         val listOfCookie = dao.getAllCookiesFlow().getOrAwaitValue()
@@ -56,6 +56,22 @@ class CookieDaoTest {
 
     }
 
+    @Test
+    fun deleteCookie() = runTest(UnconfinedTestDispatcher()){
+        val cookie = Cookie(2,"testingCookie")
+        dao.insert(cookie)
+        dao.delete(cookie)
+        val listOfCookies = dao.getAllCookiesFlow().getOrAwaitValue()
+        assertThat(listOfCookies).doesNotContain(cookie)
+    }
+
+    @Test
+    fun getCookie() = runTest(UnconfinedTestDispatcher()){
+        val cookie = Cookie(2, "testCookie")
+        dao.insert(cookie)
+        val cookieGet = dao.getById(2)
+        assertThat(cookie).isEqualTo(cookie)
+    }
     @After
     fun tearDown(){
         database.close()
