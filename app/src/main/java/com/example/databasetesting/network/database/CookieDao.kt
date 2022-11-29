@@ -1,6 +1,7 @@
 package com.example.databasetesting.network.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.databasetesting.models.Cookie
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,7 @@ interface CookieDao {
     suspend fun getById(id:Int):Cookie
 
     @Query("SELECT * FROM cookies")
-    fun getAllCookiesFlow(): LiveData<List<Cookie>>
+    fun getAllCookiesFlow(): MutableLiveData<List<Cookie>>
 
 
 }
